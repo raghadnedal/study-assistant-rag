@@ -2,7 +2,7 @@ from app.db import get_connection
 from app.rag.embeddings import embed_texts
 
 
-def retrieve_chunks(question, top_k=5):
+def retrieve_chunks(question, document_id, top_k=5):
     query_embedding = embed_texts([question])[0].tolist()
 
     connection = get_connection()
@@ -19,11 +19,13 @@ def retrieve_chunks(question, top_k=5):
                 FROM chunks
                 JOIN documents
                     ON chunks.document_id = documents.id
+                where chunks.document_id=%s
                 ORDER BY chunks.embedding <=> %s::vector
                 LIMIT %s;
                 """,
                 (
                     query_embedding,
+                    document_id,
                     query_embedding,
                     top_k,
                 ),

@@ -1,23 +1,46 @@
 # Study Assistant RAG
 
-A Study Assistant chatbot built with Retrieval-Augmented Generation (RAG).
+A backend-first Study Assistant built with FastAPI, PostgreSQL, pgvector, Sentence Transformers, and Groq.
 
-## Current Stack
+## Features
+
+- PDF upload
+- Text extraction and chunking
+- Local embeddings
+- Vector search with pgvector
+- RAG-based answers
+- Source citations
+- Chat sessions
+- PostgreSQL chat history
+- Document-scoped retrieval
+- API validation and tests
+
+## Tech Stack
 
 - Python
-- Groq API
-- Sentence Transformers
+- FastAPI
 - PostgreSQL
 - pgvector
+- Sentence Transformers
+- Groq API
+- pytest
 
-## Current Features
+## API Endpoints
 
-- PDF text extraction
-- Text cleaning
-- Chunking
-- Embeddings
-- Vector similarity search
-- RAG retrieval
-- Grounded LLM answers
-- Source citations
-- Conversation history
+- `GET /health`
+- `POST /sessions`
+- `POST /documents/upload`
+- `POST /chat`
+
+## Project Structure
+
+```text
+src/app/
+├── chat/
+├── llm/
+├── rag/
+├── db.py
+└── main.py
+
+tests/
+└── test_api.py

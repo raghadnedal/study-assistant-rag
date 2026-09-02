@@ -98,3 +98,34 @@ def run_chat():
         )
         print("Assistant:", response["answer"])
         print("Sources:", response["sources"])
+
+
+def answer_question(user_input, history, document_id):
+    retrieval_question = build_retrieval_question(
+        history=history,
+        user_input=user_input,
+    )
+
+    results = retrieve_chunks(
+        question=retrieval_question,
+        document_id=document_id,
+        top_k=5,
+    )
+
+    context = build_context(results)
+
+    messages = build_rag_messages(
+        question=user_input,
+        context=context,
+    )
+
+    messages[1:1] = history
+
+    assistant_reply = generate_response(messages)
+
+    sources = build_sources(results)
+
+    return {
+        "answer": assistant_reply,
+        "sources": sources,
+    }
